@@ -9,18 +9,20 @@ export const Modal = ({image, onClose}) => {
 
 
 
-  useEffect(() => {window.addEventListener('keydown', handleKeydown);
+  useEffect(() => {
+    const handleKeydown = e => {
+      if (e.code === 'Escape') {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeydown);
 return(() => {
   window.removeEventListener('keydown', handleKeydown);
 })
-}, [])
+}, [onClose])
 
 
-  const handleKeydown = e => {
-    if (e.code === 'Escape') {
-      onClose();
-    }
-  };
+  
 
   const handleBackdropClick = e => {
     if (e.target === e.currentTarget) {

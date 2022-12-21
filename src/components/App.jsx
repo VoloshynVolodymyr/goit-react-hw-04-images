@@ -7,6 +7,7 @@ import Loader from './Loader/Loader';
 import { Modal } from './Modal/Modal';
 import * as API from '../API/api';
 import { AppStyle } from './App.styled';
+import {animateScroll as scroll} from 'react-scroll';
 
 const Status = {
   PENDING: 'pending',
@@ -23,9 +24,7 @@ export const App = () => {
   const [status, setStatus] = useState('');
   const [currentImage, setCurrentImage] = useState(null);
 
-  const myRef = React.createRef();
-
-  useEffect(() => {
+    useEffect(() => {
     const fetchImages = async () => {
       if (filter === '') {
         setStatus(Status.ERROR);
@@ -62,7 +61,7 @@ export const App = () => {
 
   const handleLoadMoreButtonClick = () => {
     setPage(prevPage => prevPage + 1);
-    setTimeout(() => myRef.current.scrollIntoView(), 1000);
+scroll.scrollToBottom();
   };
 
   const handleImageClick = userImage => {
@@ -82,14 +81,13 @@ export const App = () => {
           <ImageGallery images={images} onClick={handleImageClick} />
           {status === 'resolved' && images.length !== total && (
             <div
-              ref={myRef}
-              style={{
+                style={{
                 marginRight: 'auto',
                 marginLeft: 'auto',
                 maxHeight: '40px',
               }}
             >
-              <Button text="Load more" onClick={handleLoadMoreButtonClick} />
+              <Button text="Load more" onClick={handleLoadMoreButtonClick}/>
             </div>
           )}
         </>
@@ -97,7 +95,7 @@ export const App = () => {
       {status === Status.PENDING && <Loader />}
       <Toaster position="top-center" />
       {status === Status.MODAL && (
-        <Modal ref={myRef} image={currentImage} onClose={handleModalClose} />
+        <Modal image={currentImage} onClose={handleModalClose} />
       )}
     </AppStyle>
   );
