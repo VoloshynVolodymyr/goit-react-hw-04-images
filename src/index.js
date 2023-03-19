@@ -11,7 +11,7 @@ const root = createRoot(rootElement);
 
 root.render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="goit-react-hw-04-images">
       <App />
     </BrowserRouter>
   </StrictMode>
